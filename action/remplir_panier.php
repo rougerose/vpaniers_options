@@ -72,6 +72,7 @@ function action_remplir_panier($arg=null) {
 		// Si on a déjà une quantité, on fait une mise à jour
 		if ($quantite_deja > 0){
 			$cumul_quantite = $paniers_arrondir_quantite($quantite_deja + $quantite, $objet, $id_objet);
+			
 			//Si le cumul_quantite est 0, on efface
 			if ($cumul_quantite <= 0) {
 				sql_delete('spip_paniers_liens', 'id_panier = ' . intval($id_panier) . ' and objet = ' . sql_quote($objet) . ' and id_objet = ' . intval($id_objet));
