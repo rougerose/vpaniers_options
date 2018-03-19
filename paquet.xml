@@ -8,7 +8,7 @@
 	documentation=""
 	schema="1.0.0"
 >
-	<nom>Options du panier</nom>
+	<nom>Vacarme, options du panier</nom>
 	<auteur lien="http://rouge-rose.net">Christophe Le Drean</auteur>
 	<credit lien="https://plugins.spip.net/panier_options.html">Fork du plugin "Options du panier"</credit>
 
