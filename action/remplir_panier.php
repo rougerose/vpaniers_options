@@ -37,7 +37,7 @@ function action_remplir_panier($arg=null) {
 		$quantite = $paniers_arrondir_quantite(-1 * $quantite, $objet, $id_objet);
 	}
 		
-	// Il faut cherche le panier du visiteur en cours
+	// Il faut chercher le panier du visiteur en cours
 	include_spip('inc/paniers');
 	$id_panier_base = 0;
 	if ($id_panier = paniers_id_panier_encours()){
