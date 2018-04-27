@@ -1,0 +1,10 @@
+<BOUCLE_beneficiaire(AUTEURS){id_auteur=#ENV{id_auteur}}{tout}>
+	<BOUCLE_beneficiaire(CONTACTS){id_auteur}>
+		<br/><span><:vacarme:abonnement_resume_label_beneficiaire:></span> #PRENOM #NOM
+	</BOUCLE_beneficiaire>
+	[(#SET{date_notification, #PGP|unserialize|table_valeur{'abonnement_offert_date'}|timestamp_vers_date|affdate})]
+	[<br/>Date notification (#GET{date_notification})]
+	<BOUCLE_message(MESSAGES){destinataires=#ID_AUTEUR}{statut=prepa}{type=kdo}>
+		[<br/>Votre message : <span>(#TEXTE|PtoBR)</span>]
+	</BOUCLE_message>
+</BOUCLE_beneficiaire>
