@@ -10,7 +10,7 @@
 >
 	<nom>Vacarme, options du panier</nom>
 	<auteur lien="http://rouge-rose.net">Christophe Le Drean</auteur>
-	<credit lien="https://plugins.spip.net/panier_options.html">Fork du plugin "Options du panier"</credit>
+	<credit lien="https://plugins.spip.net/panier_options.html">Dérivé du plugin "Options du panier"</credit>
 
 	<pipeline nom="declarer_champs_extras" inclure="base/vpaniers_options.php" />
 	
