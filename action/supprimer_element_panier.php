@@ -9,7 +9,7 @@ if (!defined("_ECRIRE_INC_VERSION")) {
  * Supprimer un article du panier en cours. 
  *
  * Cette fonction vient surcharger celle du plugin Paniers,
- * afin du traitement spécifique des abonnements offerts.
+ * afin d'ajouter un traitement spécifique des abonnements offerts.
  * 
  * @param  string $arg objet-id_objet 
  * @return bool|void
