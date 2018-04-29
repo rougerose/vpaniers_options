@@ -1,9 +1,8 @@
-#CACHE{0}
+#CACHE{0} #SET{redirection, #ENV{redirection, ''}}
 <B_contenu_panier>
 	<table cellspacing="0">
 		<thead>
 			<tr>
-				<th>action</th>
 				<th class="description"><:paniers:panier_description:></th>
 				<th class="prix_unitaire"><:paniers:panier_prix_unitaire:></th>
 				<th class="quantite"><:paniers:panier_quantite:></th>
@@ -16,8 +15,7 @@
 			[(#SET{taxe_objet,[(#GET{prix_unitaire}|moins{#PRIX_HT*{#OBJET,#ID_OBJET}}|mult{#QUANTITE})]})]
 			[(#SET{cumul_taxes,[(#GET{cumul_taxes}|plus{[(#GET{taxe_objet})]})]})]
 			<tr class="emplette[ (#ENV{erreurs}|table_valeur{quantites}|table_valeur{#OBJET}|table_valeur{#ID_OBJET}|?{erreur})]">
-				<td> </td>
-				<td class="description">#INCLURE{fond=inclure/panier-description-article,objet=#OBJET,id_objet=#ID_OBJET, env}</td>
+				<td class="description">#INCLURE{fond=inclure/panier-description-article, id_panier, objet=#OBJET, id_objet=#ID_OBJET, env}</td>
 				<td class="prix_unitaire">[(#GET{prix_unitaire}|prix_formater)]</td>
 				<td class="quantite">Quantité
 
@@ -26,21 +24,22 @@
 			</tr>
 			</BOUCLE_contenu_panier>
 			<tr class="total_ttc">
-				<td></td>
-				<td class="description">xxx</td>
+				<td class="description"></td>
 				<td class="total"><:paniers:panier_total_ttc:></td>
 				<td class="quantite">xxx</td>
 				<td class="montant">#PRIX{panier,#ENV{_id_panier}}</td>
 			</tr>
 			[(#GET{cumul_taxes}|>{0}|oui)
 			<tr class="taxes">
-				<td></td>
 				<td class="total" colspan="2"><:paniers:dont_total_taxe:></td>
 				<td class="quantite"></td>
 				<td class="montant">[(#GET{cumul_taxes}|prix_formater)]</td>
 			</tr>]
 		</tbody>
 	</table>
+	[<div class="ajax">
+		(#FORMULAIRE_VALIDER_PANIER{#ENV{_id_panier}, 1, #GET{redirection}})
+	</div>]
 </B_contenu_panier>
 <:paniers:panier_vide:>
 <//B_contenu_panier>

@@ -1,4 +1,4 @@
-<BOUCLE_article_panier(PANIERS_LIENS){id_objet=#ENV{id_objet}}{objet=#ENV{objet}}>
+<BOUCLE_article_panier(PANIERS_LIENS){id_panier}{id_objet=#ENV{id_objet}}{objet=#ENV{objet}}>
 	[(#OPTIONS|table_valeur{numero}|oui) #SET{numero, #OPTIONS|table_valeur{numero}} ]
 	[(#OPTIONS|table_valeur{cadeau}|oui) #SET{cadeau, #OPTIONS|table_valeur{cadeau}} ]
 	[(#OPTIONS|table_valeur{coupon}|oui) #SET{coupon, #OPTIONS|table_valeur{coupon}} ]
@@ -9,13 +9,13 @@
 		[(#SET{numeros, #DUREE|numeros_nombre_en_clair})]
 		[(#SET{prix, #PRIX})]
 		<p>
-			[<span><:vacarme:abonnement_resume_label_abonnement:> (#TITRE)[ / (#GET{numeros})]</span>]
+			[<span><:vpaniers:abonnement_resume_label_abonnement:> (#TITRE)[ / (#GET{numeros})]</span>]
 			[(#GET{numero}|oui)
-				[<br/><span><:vacarme:abonnement_resume_label_numero:></span> (#GET{numero}|calculer_numero_futur_titre{0})]]
+				[<br/><span><:vpaniers:abonnement_resume_label_numero:></span> (#GET{numero}|calculer_numero_futur_titre{0})]]
 			[(#GET{cadeau}|oui)
-				[<br/><span><:vacarme:abonnement_resume_label_cadeau:></span> (#GET{cadeau}|=={-1}|?{<:vacarme:abonnement_resume_cadeau_vide:>,#INFO_TITRE{produit, #GET{cadeau}}})]
+				[<br/><span><:vpaniers:abonnement_resume_label_cadeau:></span> (#GET{cadeau}|=={-1}|?{<:vpaniers:abonnement_resume_cadeau_vide:>,#INFO_TITRE{produit, #GET{cadeau}}})]
 			][(#GET{_id_auteur}|oui)
-				[(#INCLURE{fond=inclure/panier-description-beneficiaire, id_auteur=#GET{_id_auteur}, env})]]
+				[(#INCLURE{fond=inclure/panier-description-beneficiaire, id_auteur=#GET{_id_auteur}})]]
 		</p>
 		<p>[<a href="(#URL_ACTION_AUTEUR{supprimer_element_panier, #OBJET-#ID_OBJET, #SELF})">Supprimer</a>]</p>
 	</BOUCLE_abonnement>
