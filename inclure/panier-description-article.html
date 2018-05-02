@@ -19,6 +19,6 @@
 			][(#GET{_id_auteur}|oui) auteur
 				[(#INCLURE{fond=inclure/panier-description-beneficiaire, id_auteur=#GET{_id_auteur}})]]
 		</p>
-		<p>[<a href="(#URL_ACTION_AUTEUR{supprimer_element_panier, #OBJET-#ID_OBJET[-(#GET{cle})], #SELF})">Supprimer</a>]</p>
+		<p>[<a href="(#URL_ACTION_AUTEUR{supprimer_element_panier, #OBJET-#ID_OBJET[-(#GET{cle})], #URL_PAGE{panier}})" class="">Supprimer</a>]</p>
 	</BOUCLE_abonnement>
 </BOUCLE_article_panier>
