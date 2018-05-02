@@ -99,21 +99,26 @@ function action_supprimer_element_panier($arg=null) {
 			if (sql_countsel('spip_auteurs', 'id_auteur='.$id_auteur.' and statut='.sql_quote('nouveau'))) {
 				$id_contact = sql_getfetsel('id_contact', 'spip_contacts', 'id_auteur='.intval($id_auteur));
 				
+				include_spip('inc/autoriser');
 				// 
 				// Organisation liée ?
 				// 
 				if ($id_organisation = sql_getfetsel('id_organisation', 'spip_organisations_liens', 'id_objet='.$id_contact.' and objet='.sql_quote('contact'))) {
+					autoriser_exception('supprimer', 'organisation', $id_organisation);
 					$dissocier = charger_fonction("supprimer_lien","action");
 					$organisation_contact = "organisation-$id_organisation-contact-$id_contact";
 					$dissocier($organisation_contact);
+					autoriser_exception('supprimer', 'organisation', $id_organisation, false);
 				}
 				
 				// 
 				// Adresse liée ?
 				// 
 				if ($id_adresse = sql_getfetsel('id_adresse', 'spip_adresses_liens', 'id_objet='.intval($id_auteur).' AND objet='.sql_quote('auteur').' AND type='.sql_quote(_ADRESSE_TYPE_DEFAUT))) {
+					autoriser_exception('modifier', 'auteur', $id_auteur);
 					$dissocier_adresse = charger_fonction("dissocier_adresse","action");
 					$dissocier_adresse(intval($id_adresse)."/auteur/$id_auteur");
+					autoriser_exception('modifier', 'auteur', $id_auteur, false);
 				}
 				
 				// 
@@ -123,16 +128,14 @@ function action_supprimer_element_panier($arg=null) {
 				$dissocier_contact("$id_contact/0");
 				
 				// 
-				// Auteur à la poubelle
+				// Auteur à la poubelle et supprimer son mail.
 				// 
-				include_spip('inc/autoriser');
 				autoriser_exception('modifier', 'auteur', $id_auteur);
-				
 				include_spip('action/editer_auteur');
-				auteur_modifier($id_auteur, array('statut' => '5poubelle'));
-				
+				auteur_modifier($id_auteur, array('statut' => '5poubelle', 'email' => ''));
 				autoriser_exception('modifier', 'auteur', $id_auteur, false);
 			}
+			
 		}
 		
 		// 
