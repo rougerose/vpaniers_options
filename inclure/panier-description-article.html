@@ -1,22 +1,24 @@
 <BOUCLE_article_panier(PANIERS_LIENS){id_panier}{id_objet=#ENV{id_objet}}{objet=#ENV{objet}}>
-	[(#OPTIONS|table_valeur{numero}|oui) #SET{numero, #OPTIONS|table_valeur{numero}} ]
-	[(#OPTIONS|table_valeur{cadeau}|oui) #SET{cadeau, #OPTIONS|table_valeur{cadeau}} ]
-	[(#OPTIONS|table_valeur{coupon}|oui) #SET{coupon, #OPTIONS|table_valeur{coupon}} ]
-	[(#GET{coupon}|is_numeric|?{#SET{_id_auteur, #GET{coupon}}})]
-
+	[(#OBJET|=={abonnements_offre}|oui)
+		[(#SET{cle, #OPTIONS|count|moins{1}})]
+		[(#SET{opt_coupon, #OPTIONS|table_valeur{#GET{cle}}|table_valeur{0}})]
+		[(#SET{opt_numero, #OPTIONS|table_valeur{#GET{cle}}|table_valeur{1}})]
+		[(#SET{opt_cadeau, #OPTIONS|table_valeur{#GET{cle}}|table_valeur{2}})]
+		[(#GET{opt_coupon}|is_numeric|oui) #SET{_id_auteur, #GET{opt_coupon}} ]
+	]
 	<BOUCLE_abonnement(ABONNEMENTS_OFFRES){id_abonnements_offre=#ID_OBJET}{si #OBJET|=={abonnements_offre}}>
 		[(#SET{titre, #TITRE})]
 		[(#SET{numeros, #DUREE|numeros_nombre_en_clair})]
 		[(#SET{prix, #PRIX})]
 		<p>
 			[<span><:vpaniers:abonnement_resume_label_abonnement:> (#TITRE)[ / (#GET{numeros})]</span>]
-			[(#GET{numero}|oui)
-				[<br/><span><:vpaniers:abonnement_resume_label_numero:></span> (#GET{numero}|calculer_numero_futur_titre{0})]]
-			[(#GET{cadeau}|oui)
-				[<br/><span><:vpaniers:abonnement_resume_label_cadeau:></span> (#GET{cadeau}|=={-1}|?{<:vpaniers:abonnement_resume_cadeau_vide:>,#INFO_TITRE{produit, #GET{cadeau}}})]
-			][(#GET{_id_auteur}|oui)
+			[(#GET{opt_numero}|oui)
+				[<br/><span><:vpaniers:abonnement_resume_label_numero:></span> (#GET{opt_numero}|calculer_numero_futur_titre{0})]]
+			[(#GET{opt_cadeau}|oui)
+				[<br/><span><:vpaniers:abonnement_resume_label_cadeau:></span> (#GET{opt_cadeau}|=={0}|?{<:vpaniers:abonnement_resume_cadeau_vide:>,#INFO_TITRE{produit, #GET{opt_cadeau}}})]
+			][(#GET{_id_auteur}|oui) auteur
 				[(#INCLURE{fond=inclure/panier-description-beneficiaire, id_auteur=#GET{_id_auteur}})]]
 		</p>
-		<p>[<a href="(#URL_ACTION_AUTEUR{supprimer_element_panier, #OBJET-#ID_OBJET, #SELF})">Supprimer</a>]</p>
+		<p>[<a href="(#URL_ACTION_AUTEUR{supprimer_element_panier, #OBJET-#ID_OBJET[-(#GET{cle})], #SELF})">Supprimer</a>]</p>
 	</BOUCLE_abonnement>
 </BOUCLE_article_panier>
