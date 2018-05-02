@@ -43,6 +43,7 @@ function formulaires_valider_panier_verifier_dist($id_panier, $garder_panier=fal
 }
 
 function formulaires_valider_panier_traiter_dist($id_panier, $garder_panier=false, $redirect=""){
+	
 	include_spip('inc/commandes');
 	include_spip('inc/config');
 	// si une commande recente est encours (statut et dans la session de l'utilisateur), on la reutilise
@@ -66,8 +67,16 @@ function formulaires_valider_panier_traiter_dist($id_panier, $garder_panier=fals
 
 	// et la remplir les details de la commande d'après le panier en session
 	if ($id_commande) {
-		include_spip('action/commandes_paniers');
-		panier2commande_remplir_commande($id_commande, $id_panier, false);
+		// NOTE: Compte tenu des traitements particuliers pour les abonnements
+		// -- par exemple abonnement offert ou 2 abonnements identiques mais 
+		// l'un est offert et l'autre pas -- il faut utiliser une fonction
+		// spécifique et non la fonction panier2commande_remplir_commande.
+		//
+		// include_spip('action/commandes_paniers');
+		// panier2commande_remplir_commande($id_commande, $id_panier, false);
+		
+		include_spip('inc/vpaniers_options_commande');
+		vpaniers_options_vers_commande($id_commande, $id_panier, false);
 		
 		// Supprimer le panier ?
 		if (!$garder_panier) {

@@ -1,7 +1,7 @@
 <paquet
 	prefix="vpaniers_options"
 	categorie="squelette"
-	version="1.0.1"
+	version="1.0.2"
 	etat="test"
 	compatibilite="[3.2.0;3.2.*]"
 	logo="prive/themes/spip/images/vpaniers_options-64.png"
@@ -13,6 +13,7 @@
 	<credit lien="https://plugins.spip.net/panier_options.html">Dérivé du plugin "Options du panier"</credit>
 
 	<pipeline nom="declarer_champs_extras" inclure="base/vpaniers_options.php" />
+	<pipeline nom="vpaniers_options_vers_commande" />
 	
 	<necessite nom="paniers" compatibilite="[1.3.3;[" />
 	<necessite nom="cextras" compatibilite="[3.11.3;[" />
