@@ -11,7 +11,7 @@ if (!defined("_ECRIRE_INC_VERSION")) {
  * Cette fonction vient surcharger celle du plugin Paniers,
  * afin d'ajouter un traitement spécifique des abonnements offerts.
  * 
- * @param  string $arg objet-id_objet 
+ * @param  string $arg objet-id_objet-cle 
  * @return bool|void
  */
 function action_supprimer_element_panier($arg=null) {
