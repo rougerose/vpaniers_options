@@ -5,7 +5,11 @@ if (!defined("_ECRIRE_INC_VERSION")) return;
 $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'abonnement_resume_label_abonnement'        => "Abonnement ",
 	'abonnement_resume_label_abonnement_offrir' => "Abonnement offert ",
+	'abonnement_resume_label_auteur_off'        => "Identifiez-vous",
+	'abonnement_resume_label_auteur_on'        => "Vous êtes identifié-e",
 	'abonnement_resume_label_beneficiaire'      => "Abonnement offert à ",
+	'abonnement_resume_label_beneficiaire_off'      => "Votre bénéficiaire",
+	'abonnement_resume_label_beneficiaire_on'      => "Abonnement offert à ",
 	'abonnement_resume_label_cadeau'            => "Votre cadeau ",
 	'abonnement_resume_label_numero'            => "À partir du numéro ",
 	'abonnement_resume_cadeau_vide'             => "aucun",
