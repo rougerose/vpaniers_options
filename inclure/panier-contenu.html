@@ -1,6 +1,6 @@
 #CACHE{0} #SET{redirection, #ENV{redirection, ''}}
 <B_contenu_panier>
-	<table cellspacing="0">
+	<table cellspacing="0" class="c-commande-table u-typo-font-vacarme">
 		<thead>
 			<tr>
 				<th class="description"><:paniers:panier_description:></th>
@@ -14,23 +14,21 @@
 			#SET{prix_unitaire,#PRIX*{#OBJET,#ID_OBJET}}
 			[(#SET{taxe_objet,[(#GET{prix_unitaire}|moins{#PRIX_HT*{#OBJET,#ID_OBJET}}|mult{#QUANTITE})]})]
 			[(#SET{cumul_taxes,[(#GET{cumul_taxes}|plus{[(#GET{taxe_objet})]})]})]
-			<tr class="emplette[ (#ENV{erreurs}|table_valeur{quantites}|table_valeur{#OBJET}|table_valeur{#ID_OBJET}|?{erreur})]">
-				<td class="description">#INCLURE{fond=inclure/panier-description-article, id_panier, objet=#OBJET, id_objet=#ID_OBJET, env}</td>
+			<tr class="c-commande-table__row c-commande-item[ (#ENV{erreurs}|table_valeur{quantites}|table_valeur{#OBJET}|table_valeur{#ID_OBJET}|?{erreur})]">
+				<td class="c-commande-item__desc description">#INCLURE{fond=inclure/panier-description-article, id_panier, objet=#OBJET, id_objet=#ID_OBJET, env}</td>
 				<td class="prix_unitaire">[(#GET{prix_unitaire}|prix_formater)]</td>
-				<td class="quantite">Quantité
-
-				</td>
+				<td class="quantite">#QUANTITE</td>
 				<td class="montant">[(#GET{prix_unitaire}|mult{#QUANTITE}|prix_formater)]</td>
 			</tr>
 			</BOUCLE_contenu_panier>
-			<tr class="total_ttc">
+			<tr class="c-commande-table__row c-commande-table__row--total total_ttc">
 				<td class="description"></td>
 				<td class="total"><:paniers:panier_total_ttc:></td>
-				<td class="quantite">xxx</td>
+				<td class="quantite"></td>
 				<td class="montant">#PRIX{panier,#ENV{_id_panier}}</td>
 			</tr>
 			[(#GET{cumul_taxes}|>{0}|oui)
-			<tr class="taxes">
+			<tr class="c-commande-table__row c-commande-table__row--taxes">
 				<td class="total" colspan="2"><:paniers:dont_total_taxe:></td>
 				<td class="quantite"></td>
 				<td class="montant">[(#GET{cumul_taxes}|prix_formater)]</td>
@@ -41,5 +39,5 @@
 		(#FORMULAIRE_VALIDER_PANIER{#ENV{_id_panier}, 1, #GET{redirection}})
 	</div>]
 </B_contenu_panier>
-<:paniers:panier_vide:>
+	<p class="c-message c-message--attention"><:paniers:panier_vide:></p>
 <//B_contenu_panier>

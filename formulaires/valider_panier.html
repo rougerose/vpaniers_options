@@ -16,12 +16,12 @@
 			<div class="choix">
 				<input type="checkbox" name="#GET{name}#EVAL{chr(91)}#EVAL{chr(93)}" class="checkbox" id="#GET{name}_#GET{val}" value="#GET{val}"[(#GET{val}|in_any{#ENV{#GET{name}}}|oui)checked="checked"] />
 				<!-- TODO: changer l'url de l'article ! -->
-				<label for="#GET{name}_#GET{val}">Conditions générales d'utilisation (<a href="#URL_ARTICLE{2}" target="blank">lire</a>)</label>
+				<label for="#GET{name}_#GET{val}">Conditions générales de vente (<a href="#URL_ARTICLE{2}" target="blank">lire [article à faire]</a>)</label>
 			</div>
 		</div>
 		[(#REM) ajouter les saisies supplementaires : extra et autre, a cet endroit ]
 		<!--extra-->
 		<p class='boutons'><span class='image_loading'>&nbsp;</span>
-			<input type='submit' class='submit' value='<:vpaniers:bouton_valider|attribut_html:>' /></p>
+			<input type='submit' class='submit' value='<:vpaniers:bouton_valider_panier|attribut_html:>' /></p>
 	</div></form>
 </div>

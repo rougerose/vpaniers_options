@@ -14,6 +14,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'abonnement_resume_label_numero'            => "À partir du numéro ",
 	'abonnement_resume_cadeau_vide'             => "aucun",
 	'abonnements_resume_titre'                  => "Votre choix",
+	'bouton_valider_panier' => "Valider votre panier",
 	'erreur_technique_creation_commande'        => "Une erreur technique a empêché la validation de votre commande",
 	'erreur_accepter_contrat'                   => "Vous devez accepter le contrat",
 	'erreur_id_panier'                          => "Il n'est pas possible d'identifier votre panier",
