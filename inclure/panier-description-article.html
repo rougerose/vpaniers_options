@@ -1,12 +1,11 @@
 <BOUCLE_article_panier(PANIERS_LIENS){id_panier}{id_objet=#ENV{id_objet}}{objet=#ENV{objet}}>
-	[(#OBJET|=={abonnements_offre}|oui)
+	<BOUCLE_abonnement(ABONNEMENTS_OFFRES){id_abonnements_offre=#ID_OBJET}{si #OBJET|=={abonnements_offre}}>
 		[(#SET{cle, #OPTIONS|count|moins{1}})]
 		[(#SET{opt_coupon, #OPTIONS|table_valeur{#GET{cle}}|table_valeur{0}})]
 		[(#SET{opt_numero, #OPTIONS|table_valeur{#GET{cle}}|table_valeur{1}})]
 		[(#SET{opt_cadeau, #OPTIONS|table_valeur{#GET{cle}}|table_valeur{2}})]
 		[(#GET{opt_coupon}|is_numeric|oui) #SET{_id_auteur, #GET{opt_coupon}} ]
-	]
-	<BOUCLE_abonnement(ABONNEMENTS_OFFRES){id_abonnements_offre=#ID_OBJET}{si #OBJET|=={abonnements_offre}}>
+		
 		[(#SET{titre, #TITRE})]
 		[(#SET{numeros, #DUREE|numeros_nombre_en_clair})]
 		[(#SET{prix, #PRIX})]
@@ -21,4 +20,10 @@
 		</p>
 		[<a class="c-btn c-btn--delete c-btn--round" href="(#URL_ACTION_AUTEUR{supprimer_element_panier, #OBJET-#ID_OBJET[-(#GET{cle})], #URL_PAGE{panier}})" class="">Supprimer</a>]
 	</BOUCLE_abonnement>
+	<BOUCLE_numeros(RUBRIQUES){id_rubrique=#ID_OBJET}>
+		<p>
+			[<span class="c-commande-item__title">(#TITRE)</span>]
+		</p>
+		[<a class="c-btn c-btn--delete c-btn--round" href="(#URL_ACTION_AUTEUR{supprimer_element_panier, #OBJET-#ID_OBJET, #URL_PAGE{panier}})" class="">Supprimer</a>]
+	</BOUCLE_numeros>
 </BOUCLE_article_panier>

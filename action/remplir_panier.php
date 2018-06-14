@@ -127,35 +127,45 @@ function action_remplir_panier($arg=null) {
 				// S'il faut modifier un item du tableau :
 				// La clé pour l'identifier est indiquée explicitement.
 				// 
-				if ($objet == 'abonnements_offre' && isset($faire) && $faire == 'ajout' && isset($options_ajout)) {
-					$options_deja = unserialize($deja['options']);
-					$options_deja[] = $options_ajout;
-					$options = serialize($options_deja);
-					
-					sql_updateq(
-						'spip_paniers_liens', 
-						array('quantite' => $cumul_quantite, 'options' => $options), 
-						'id_panier = ' . intval($id_panier) . ' and objet = ' . sql_quote($objet) . ' and id_objet = ' . intval($id_objet)
-					);
-					
-					end($options_deja);
-					$key = key($options_deja);
-					
-					if ($redirect = _request('redirect')) {
-    					include_spip('inc/headers');
-						$redirect = parametre_url(parametre_url($redirect, 'cle', ''), 'cle', $key, '&');
-						redirige_par_entete($redirect);
+				if ($objet == 'abonnements_offre') {
+					if (isset($faire) && $faire == 'ajout' && isset($options_ajout)) {
+						$options_deja = unserialize($deja['options']);
+						$options_deja[] = $options_ajout;
+						$options = serialize($options_deja);
+						
+						sql_updateq(
+							'spip_paniers_liens', 
+							array('quantite' => $cumul_quantite, 'options' => $options), 
+							'id_panier = ' . intval($id_panier) . ' and objet = ' . sql_quote($objet) . ' and id_objet = ' . intval($id_objet)
+						);
+						
+						end($options_deja);
+						$key = key($options_deja);
+						
+						if ($redirect = _request('redirect')) {
+	    					include_spip('inc/headers');
+							$redirect = parametre_url(parametre_url($redirect, 'cle', ''), 'cle', $key, '&');
+							redirige_par_entete($redirect);
+						}
+						
+					} elseif (isset($faire) && $faire == 'modifier' && isset($cle) && isset($options_ajout)) {
+						$options_deja = unserialize($deja['options']);
+						$options_deja[$cle] = $options_ajout;
+						$options = serialize($options_deja);
+						
+						sql_updateq(
+							'spip_paniers_liens',
+							array('options' => $options),
+							'id_panier = ' . intval($id_panier) . ' and objet = ' . sql_quote($objet) . ' and id_objet = ' . intval($id_objet)
+						);
 					}
-					
-				} elseif ($objet == 'abonnements_offre' && isset($faire) && $faire == 'modifier' && isset($cle) && isset($options_ajout)) {
-					$options_deja = unserialize($deja['options']);
-					$options_deja[$cle] = $options_ajout;
-					$options = serialize($options_deja);
-					
+				} else {
+					// Ajouter un numéro qui existe déjà dans le panier
 					sql_updateq(
 						'spip_paniers_liens',
-						array('options' => $options),
-						'id_panier = ' . intval($id_panier) . ' and objet = ' . sql_quote($objet) . ' and id_objet = ' . intval($id_objet));
+						array('quantite' => $cumul_quantite),
+						'id_panier = '. intval($id_panier) . ' and objet = '. sql_quote($objet) . ' and id_objet = ' . intval($id_objet)
+					);
 				}
 			}
 		} else {
