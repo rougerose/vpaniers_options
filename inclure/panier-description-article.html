@@ -15,7 +15,7 @@
 				[<br/><span><:vpaniers:abonnement_resume_label_numero:></span> (#GET{opt_numero}|calculer_numero_futur_titre{0})]]
 			[(#GET{opt_cadeau}|oui)
 				[<br/><span><:vpaniers:abonnement_resume_label_cadeau:></span> (#GET{opt_cadeau}|=={0}|?{<:vpaniers:abonnement_resume_cadeau_vide:>,#INFO_TITRE{produit, #GET{opt_cadeau}}})]
-			][(#GET{_id_auteur}|oui) auteur
+			][(#GET{_id_auteur}|oui)
 				[(#INCLURE{fond=inclure/panier-description-beneficiaire, id_auteur=#GET{_id_auteur}})]]
 		</p>
 		[<a class="c-btn c-btn--delete c-btn--round" href="(#URL_ACTION_AUTEUR{supprimer_element_panier, #OBJET-#ID_OBJET[-(#GET{cle})], #URL_PAGE{panier}})" class="">Supprimer</a>]

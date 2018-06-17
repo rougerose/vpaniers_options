@@ -4,7 +4,7 @@
 	</BOUCLE_contact>
 	[(#PGP|oui)
 		[(#SET{date_notification, #PGP|unserialize|table_valeur{'abonnement_offert_date'}|vpaniers_timestamp_vers_date|affdate})]
-		[<br/>Date notification (#GET{date_notification})]
+		[<br/>Le message sera envoyé le (#GET{date_notification})]
 	]
 	<BOUCLE_message(MESSAGES){destinataires=#ID_AUTEUR}{statut=prepa}{type=kdo}>
 		[<br/>Votre message : <span>(#TEXTE|PtoBR)</span>]
