@@ -19,6 +19,8 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'erreur_accepter_contrat'                   => "Vous devez accepter le contrat",
 	'erreur_id_panier'                          => "Il n'est pas possible d'identifier votre panier",
 	'erreur_id_auteur'                          => "Veuillez vous identifier ou créer votre compte.",
+	'label_afficher_panier' => "Voir le panier",
 	'label_accepter_contrats'                   => "Avant de valider, veuillez accepter le contrat&nbsp;:",
 	'message_panier_valide'                     => "Votre commande est validée",
+	'titre_icone_panier' => "Votre panier",
 );
