@@ -1,0 +1,20 @@
+<BOUCLE_panier_article_numero(PANIERS_LIENS){id_panier}{id_objet=#ENV{id_objet}}>
+	<BOUCLE_numeros(RUBRIQUES){id_rubrique=#ID_OBJET}>
+		<div class="c-commande-article">
+			<div class="c-commande-article__contenu">
+				<div class="c-commande-article__descriptif">
+					[<h3 class="c-commande-article__titre u-typo-font-vacarme">(#TITRE)[ / (#DATE_NUMERO|saison)[&nbsp;(#DATE_NUMERO|annee)]]</h3>]
+				</div>
+				<div class="c-commande-article__prix-quantite u-typo-font-vacarme">
+					<p class="c-commande-article__prix-quantite-item c-commande-article__prix-unitaire">[(#PRIX{#OBJET,#ID_OBJET})]</p>
+					<p class="c-commande-article__prix-quantite-item c-commande-article__quantite">&times; #QUANTITE</p>
+					<p class="c-commande-article__prix-quantite-item c-commande-article__prix-total">[(#PRIX{#OBJET,#ID_OBJET})]</p>
+					<p class="c-commande-article__prix-quantite-item c-commande-article__supprimer">
+						[<a class="c-btn c-btn--delete" href="(#URL_ACTION_AUTEUR{supprimer_element_panier, rubrique-#ID_OBJET, #URL_PAGE{panier}})" class="">Supprimer</a>]
+					</p>
+				</div>
+			</div>
+			[<img src="(#LOGO_RUBRIQUE|image_reduire{200,0}|extraire_attribut{src})"[ alt="(#TITRE|textebrut)"] class="c-commande-article__logo-numero">]
+		</div>
+	</BOUCLE_numeros>
+</BOUCLE_panier_article_numero>

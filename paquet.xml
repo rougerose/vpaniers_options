@@ -17,5 +17,5 @@
 	
 	<necessite nom="paniers" compatibilite="[1.3.3;[" />
 	<necessite nom="cextras" compatibilite="[3.11.3;[" />
-	<utilise nom="vprofils" />
+	<utilise nom="vabonnements" />
 </paquet>

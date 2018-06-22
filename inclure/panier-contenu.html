@@ -1,43 +1,32 @@
-#CACHE{0} #SET{redirection, #ENV{redirection, ''}}
-<B_contenu_panier>
-	<table cellspacing="0" class="c-commande-table u-typo-font-vacarme">
-		<thead>
-			<tr>
-				<th class="description"><:paniers:panier_description:></th>
-				<th class="prix_unitaire"><:paniers:panier_prix_unitaire:></th>
-				<th class="quantite"><:paniers:panier_quantite:></th>
-				<th class="montant"><:paniers:panier_montant:></th>
-			</tr>
-		</thead>
-		<tbody>
-			<BOUCLE_contenu_panier(PANIERS_LIENS){id_panier=#ENV{_id_panier}}>
-			#SET{prix_unitaire,#PRIX*{#OBJET,#ID_OBJET}}
-			[(#SET{taxe_objet,[(#GET{prix_unitaire}|moins{#PRIX_HT*{#OBJET,#ID_OBJET}}|mult{#QUANTITE})]})]
-			[(#SET{cumul_taxes,[(#GET{cumul_taxes}|plus{[(#GET{taxe_objet})]})]})]
-			<tr class="c-commande-table__row c-commande-item[ (#ENV{erreurs}|table_valeur{quantites}|table_valeur{#OBJET}|table_valeur{#ID_OBJET}|?{erreur})]">
-				<td class="c-commande-item__desc description">#INCLURE{fond=inclure/panier-description-article, id_panier, objet=#OBJET, id_objet=#ID_OBJET, env}</td>
-				<td class="prix_unitaire">[(#GET{prix_unitaire}|prix_formater)]</td>
-				<td class="quantite">#QUANTITE</td>
-				<td class="montant">[(#GET{prix_unitaire}|mult{#QUANTITE}|prix_formater)]</td>
-			</tr>
+#CACHE{0}
+<BOUCLE_panier(PANIERS){id_panier=#SESSION{id_panier}}>
+	[(#REM) La référence du numéro actuel. Elle sera utilisée pour la couverture de l'abonnement offert ]
+	<BOUCLE_numero_actuel(RUBRIQUES){id_parent=115}{!par titre}{0,1}>#SET{reference_numero_actuel, #REFERENCE}</BOUCLE_numero_actuel>
+	#SET{redirection, #ENV{redirection, ''}}
+	<B_contenu_panier>
+		<div class="c-commande-articles">
+			<BOUCLE_contenu_panier(PANIERS_LIENS){id_panier}>
+				[(#SET{prix_unitaire,#PRIX*{#OBJET,#ID_OBJET}})]
+				[(#SET{taxe_article,[(#GET{prix_unitaire}|moins{#PRIX_HT*{#OBJET,#ID_OBJET}}|mult{#QUANTITE})]})]
+				[(#SET{cumul_taxes,[(#GET{cumul_taxes}|plus{[(#GET{taxe_article})]})]})]
+
+				[(#OBJET|=={abonnements_offre}|oui)
+					#INCLURE{fond=inclure/panier-contenu-abonnement, id_panier, id_objet=#ID_OBJET, reference_numero_actuel=#GET{reference_numero_actuel}}
+				][(#OBJET|=={rubrique}|oui)
+					#INCLURE{fond=inclure/panier-contenu-numero, id_panier, id_objet=#ID_OBJET}
+				]
 			</BOUCLE_contenu_panier>
-			<tr class="c-commande-table__row c-commande-table__row--total total_ttc">
-				<td class="description"></td>
-				<td class="total"><:paniers:panier_total_ttc:></td>
-				<td class="quantite"></td>
-				<td class="montant">#PRIX{panier,#ENV{_id_panier}}</td>
-			</tr>
-			[(#GET{cumul_taxes}|>{0}|oui)
-			<tr class="c-commande-table__row c-commande-table__row--taxes">
-				<td class="total" colspan="2"><:paniers:dont_total_taxe:></td>
-				<td class="quantite"></td>
-				<td class="montant">[(#GET{cumul_taxes}|prix_formater)]</td>
-			</tr>]
-		</tbody>
-	</table>
-	[<div class="ajax">
-		(#FORMULAIRE_VALIDER_PANIER{#ENV{_id_panier}, 1, #GET{redirection}})
-	</div>]
-</B_contenu_panier>
-	<p class="c-message c-message--attention"><:paniers:panier_vide:></p>
-<//B_contenu_panier>
+			<div class="c-commande__totaux u-typo-font-vacarme">
+				[<p class="c-commande__total-commande"><:paniers:panier_total_ttc:> (#PRIX{panier,#ID_PANIER})</p>]
+				[<p class="c-commande__total-tva"><:paniers:dont_total_taxe:> (#GET{cumul_taxes}|prix_formater)</p>]
+			</div>
+		</div>
+		[<div class="">
+			(#FORMULAIRE_VALIDER_PANIER{#ID_PANIER, 1, #GET{redirection}})
+		</div>]
+	</B_contenu_panier>
+		<p class="c-message c-message--info"><:paniers:panier_vide:></p>
+	<//B_contenu_panier>
+</BOUCLE_panier>
+	<p class="c-message c-message--info"><:paniers:panier_vide:></p>
+<//B_panier>
