@@ -24,7 +24,7 @@ function formulaires_valider_panier_verifier_dist($id_panier, $garder_panier=fal
 	
 	$id_auteur = (_request('id_auteur')) ? _request('id_auteur') : 0;
 	if ($id_auteur == 0) {
-		$erreurs['message_erreur'] = _T('vpaniers:erreur_id_auteur');
+		$erreurs['message_erreur'] = _T('vpaniers:erreur_id_auteur', array('url' => generer_url_public('compte', 'redirection='.urlencode(generer_url_public('panier')))));
 	}
 	$contrats = _request('contrats');
 	if (!$contrats) {
