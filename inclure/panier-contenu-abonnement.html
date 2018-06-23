@@ -37,8 +37,8 @@
 				[(#SET{abonnement_ok, ' '})]
 				[(#SET{id_beneficiaire, #GET{option_0}})]
 				[(#SET{numero_debut, #ENV{reference_numero_actuel}})]
-			]
-			
+			][
+			(#GET{numero_debut}|non) #SET{numero_debut, #ENV{reference_numero_actuel}}]
 			<div class="c-commande-article c-commande-article--abonnement">
 				<div class="c-commande-article__contenu">
 					<div class="c-commande-article__descriptif">
