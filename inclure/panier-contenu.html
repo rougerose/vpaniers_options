@@ -1,8 +1,18 @@
 #CACHE{0}
 <BOUCLE_panier(PANIERS){id_panier=#SESSION{id_panier}}>
+	
 	[(#REM) La référence du numéro actuel. Elle sera utilisée pour la couverture de l'abonnement offert ]
-	<BOUCLE_numero_actuel(RUBRIQUES){id_parent=115}{!par titre}{0,1}>#SET{reference_numero_actuel, #REFERENCE}</BOUCLE_numero_actuel>
+	<BOUCLE_numero_actuel(RUBRIQUES){id_parent=115}{!par titre}{0,1}>
+		#SET{reference_numero_actuel, #REFERENCE}
+	</BOUCLE_numero_actuel>
+	<BOUCLE_auteur(AUTEURS){id_auteur=#SESSION{id_auteur}}{tout}>
+		[(#SET{auteur, #ID_AUTEUR|sinon{''}})]
+		<BOUCLE_adresse(ADRESSES){id_auteur}{type=pref}>
+			[(#SET{adresse, #ID_ADRESSE|sinon{''}})]
+		</BOUCLE_adresse>
+	</BOUCLE_auteur>
 	#SET{redirection, #ENV{redirection, ''}}
+	
 	<B_contenu_panier>
 		<div class="c-commande-articles">
 			<BOUCLE_contenu_panier(PANIERS_LIENS){id_panier}>
@@ -21,9 +31,34 @@
 				[<p class="c-commande__total-tva"><:paniers:dont_total_taxe:> (#GET{cumul_taxes}|prix_formater)</p>]
 			</div>
 		</div>
-		[<div>
-			(#FORMULAIRE_VALIDER_PANIER{#ID_PANIER, 1, #GET{redirection}})
-		</div>]
+		[(#GET{auteur}|non)
+			<div class="c-section c-section--std">
+				<h2 class="c-section__titre c-section__titre--small u-typo-font-vacarme"><:vpaniers:erreur_id_auteur:></h2>
+				[(#SET{retour, #URL_PAGE{panier}})]
+				<div class="c-commande-identification">
+					<div class="c-commande-identification__inscription">
+						[<p class="u-typo-font-vacarme"><a href="(#URL_PAGE{compte}|parametre_url{formulaire, inscription}|parametre_url{type, complet}|parametre_url{retour, #GET{retour}})" class="c-btn c-btn--black c-btn--extended c-btn--upper ajax"><:vprofils:compte_inscription_info:></a></p>]
+					</div>
+					<div class="c-commande-identification__login">
+						[<p class="u-typo-font-vacarme"><a href="(#URL_PAGE{compte}|parametre_url{formulaire, identification}|parametre_url{retour, #GET{retour}})" class="c-btn c-btn--black c-btn--extended c-btn--upper ajax"><:vprofils:compte_identification_info:></a></p>]
+					</div>
+				</div>
+			</div>
+		][(#GET{auteur}|oui)
+			[(#GET{adresse}|non)
+				<div class="c-section c-section--std">
+					<h2 class="c-section__titre c-section__titre--small u-typo-font-vacarme"><:vpaniers:erreur_adresse:></h2>
+					[(#SET{retour, #URL_PAGE{panier}})]
+					[<div class="ajax">
+						(#FORMULAIRE_MODIFIER_PROFIL{#GET{auteur}, #GET{retour}})
+					</div>]
+				</div>
+			]
+		][(#GET{auteur}|et{#GET{adresse}}|oui)
+			[<div>
+				(#FORMULAIRE_VALIDER_PANIER{#ID_PANIER, 1, #GET{redirection}})
+			</div>]
+		]
 	</B_contenu_panier>
 		<p class="c-message c-message--info"><:paniers:panier_vide:></p>
 	<//B_contenu_panier>
