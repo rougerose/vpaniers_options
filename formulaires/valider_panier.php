@@ -90,6 +90,7 @@ function formulaires_valider_panier_traiter_dist($id_panier, $garder_panier=fals
 			// calculer un hash de sécurité pour le paiement de cette commande. 
 			$date_commande = sql_getfetsel('date', 'spip_commandes', 'id_commande='.$id_commande);
 			$hash = vpaniers_calcul_hash_commande($id_auteur, $id_commande, $date_commande);
+			
 			$res['redirect'] = parametre_url(parametre_url($redirect, 'id_commande', $id_commande), 'hash_commande', $hash);
 		}
 	} else {

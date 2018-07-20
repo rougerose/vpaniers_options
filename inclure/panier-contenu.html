@@ -1,6 +1,5 @@
 #CACHE{0}
 <BOUCLE_panier(PANIERS){id_panier=#SESSION{id_panier}}>
-	
 	[(#REM) La référence du numéro actuel. Elle sera utilisée pour la couverture de l'abonnement offert ]
 	<BOUCLE_numero_actuel(RUBRIQUES){id_parent=115}{!par titre}{0,1}>
 		#SET{reference_numero_actuel, #REFERENCE}
@@ -11,6 +10,8 @@
 			[(#SET{adresse, #ID_ADRESSE|sinon{''}})]
 		</BOUCLE_adresse>
 	</BOUCLE_auteur>
+	#SET{articles_abonnement, #ARRAY}
+	#SET{articles_numero, #ARRAY}
 	#SET{redirection, #ENV{redirection, ''}}
 	
 	<B_contenu_panier>
@@ -21,9 +22,11 @@
 				[(#SET{cumul_taxes,[(#GET{cumul_taxes}|plus{[(#GET{taxe_article})]})]})]
 
 				[(#OBJET|=={abonnements_offre}|oui)
-					#INCLURE{fond=inclure/panier-contenu-abonnement, id_panier, id_objet=#ID_OBJET, reference_numero_actuel=#GET{reference_numero_actuel}}
+					[(#SET{articles_abonnement, #GET{articles_abonnement}|push{#ID_OBJET}})]
+					[(#INCLURE{fond=inclure/panier-contenu-abonnement, id_panier, id_objet=#ID_OBJET, reference_numero_actuel=#GET{reference_numero_actuel}})]
 				][(#OBJET|=={rubrique}|oui)
-					#INCLURE{fond=inclure/panier-contenu-numero, id_panier, id_objet=#ID_OBJET}
+					[(#SET{articles_numero, #GET{articles_numero}|push{#ID_OBJET}})]
+					[(#INCLURE{fond=inclure/panier-contenu-numero, id_panier, id_objet=#ID_OBJET})]
 				]
 			</BOUCLE_contenu_panier>
 			<div class="c-commande__totaux u-typo-font-vacarme">
@@ -55,6 +58,7 @@
 				</div>
 			]
 		][(#GET{auteur}|et{#GET{adresse}}|oui)
+			#INCLURE{fond=inclure/panier-adresse, id_panier, articles_abonnement=#GET{articles_abonnement}, articles_numero=#GET{articles_numero}, id_adresse=#GET{adresse}}
 			[<div>
 				(#FORMULAIRE_VALIDER_PANIER{#ID_PANIER, 1, #GET{redirection}})
 			</div>]

@@ -31,16 +31,16 @@ function vpaniers_options_vers_commande($id_commande, $id_panier, $append = true
 	// recopier le contenu du panier dans la commande
 	// On récupère le contenu du panier
 	$panier = sql_allfetsel(
-			'*', 'spip_paniers_liens', 'id_panier = ' . intval($id_panier)
+		'*', 'spip_paniers_liens', 'id_panier = ' . intval($id_panier)
 	);
-
+	
 	// Pour chaque élément du panier, on va remplir la commande
 	// (ou verifier que la ligne est deja dans la commande)
 	if ($panier and is_array($panier)) {
 		
 		$details = array();
 		
-		include_spip('spip_bonux_fonctions');
+		// include_spip('spip_bonux_fonctions');
 		$fonction_prix = charger_fonction('prix', 'inc/');
 		$fonction_prix_ht = charger_fonction('ht', 'inc/prix');
 		
@@ -98,6 +98,7 @@ function vpaniers_options_vers_commande($id_commande, $id_panier, $append = true
 							'taxe' => $taxe,
 							'statut' => 'attente'
 						);
+						
 					} else {
 						$items_set[] = array(
 							'id_commande' => $id_commande,
@@ -124,13 +125,14 @@ function vpaniers_options_vers_commande($id_commande, $id_panier, $append = true
 								'id_commande' => $id_commande,
 								'objet' => $obj,
 								'id_objet' => $id_obj,
-								'descriptif' => generer_info_entite($id_obj, $obj, 'titre', '*') . '  abonnements_offre#' . $emplette['id_objet'],
+								'descriptif' => generer_info_entite($id_obj, $obj, 'titre', '*') . '  cadeau@' . $emplette['id_objet'],
 								'quantite' => 1,
 								'reduction' => 0,
 								'prix_unitaire_ht' => 0, // c'est un cadeau
 								'taxe' => $taxe,
 								'statut' => 'attente'
 							);
+							
 						}
 					}
 				}
@@ -146,6 +148,7 @@ function vpaniers_options_vers_commande($id_commande, $id_panier, $append = true
 					'taxe' => $taxe,
 					'statut' => 'attente'
 				);
+				
 			}
 			
 			foreach ($items_set as $set) {
@@ -219,4 +222,6 @@ function vpaniers_options_vers_commande($id_commande, $id_panier, $append = true
 		);
 
 	}
+	
+	return $livraisons;
 }

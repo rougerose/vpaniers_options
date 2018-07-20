@@ -1,0 +1,10 @@
+#SET{articles_perso, #ARRAY}
+#SET{articles_offerts, #ARRAY}
+<BOUCLE_abonnements(PANIERS_LIENS){id_panier}{id_objet IN #ENV{articles_abonnement}}{si #ENV{articles_abonnement}|count|>{0}}>
+	<BOUCLE_options(DATA){source tableau, #OPTIONS}>
+		[(#VALEUR|table_valeur{0}|is_numeric|?{
+			[(#SET{articles_offerts, #GET{articles_offerts}|push{1}})], 
+			[(#SET{articles_perso, #GET{articles_perso}|push{1}})]
+		})]
+	</BOUCLE_options>
+</BOUCLE_abonnements>
