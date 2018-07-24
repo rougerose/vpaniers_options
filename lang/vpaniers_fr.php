@@ -17,6 +17,11 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	
 	'bouton_valider_panier' => "Valider votre panier",
 	
+	'commande_recap_abonnement_offert' => "<strong>Abonnement @descriptif@</strong>, @numeros@, offert à @beneficiaire@",
+	'commande_recap_abonnement_perso' => "<strong>Abonnement @descriptif@</strong>, @numeros@, à partir de @numero_debut@",
+	'commande_recap_cadeau' => "<strong>En cadeau</strong> avec votre abonnement : @descriptif@",
+	'commande_recap_numero' => "<strong>@descriptif@</strong> @date_numero@",
+	
 	'erreur_technique_creation_commande'        => "Une erreur technique a empêché la validation de votre commande",
 	'erreur_accepter_contrat'                   => "Vous devez accepter le contrat",
 	'erreur_id_panier'                          => "Il n'est pas possible d'identifier votre panier",
@@ -36,5 +41,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	
 	// P
 	'page_panier_titre' => "Vos achats",
+	
+	// R
 	
 );
