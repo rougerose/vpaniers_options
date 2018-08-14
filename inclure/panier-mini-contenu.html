@@ -1,0 +1,44 @@
+#CACHE{0}
+<BOUCLE_panier_mini(PANIERS){id_panier=#SESSION{id_panier}}>
+	[(#REM) La référence du numéro actuel. Elle sera utilisée pour la couverture de l'abonnement offert ]
+	<BOUCLE_numero_actuel(RUBRIQUES){id_parent=115}{!par titre}{0,1}>
+		#SET{reference_numero_actuel, #REFERENCE}
+	</BOUCLE_numero_actuel>
+	<div class="c-panier-mini__contenu">
+		<B_articles>
+		<ul class="o-list-bare c-panier-mini__liste-items c-panier-mini__liste-articles c-panier-mini-articles">
+			<BOUCLE_articles(PANIERS_LIENS){id_panier}>
+				[(#OBJET|=={rubrique}|oui)
+					<INCLURE{fond=inclure/panier-mini-contenu-numero, id_panier, id_objet=#ID_OBJET, objet=#OBJET}/>
+				][(#OBJET|=={abonnements_offre}|oui)
+					<INCLURE{fond=inclure/panier-mini-contenu-abonnement, id_panier, id_objet=#ID_OBJET, objet=#OBJET, reference_numero_actuel=#GET{reference_numero_actuel}}/>
+				]
+			</BOUCLE_articles>
+		</ul>
+		<footer class="c-panier-mini__footer">
+			<ul class="o-list-bare c-panier-mini__liste-items c-panier-mini-totaux">
+				<li class="c-panier-mini-item c-panier-mini-total c-panier-mini-total--livraison u-typo-font-vacarme">
+					<h3 class="c-panier-mini-item__intitule"><:vpaniers:info_livraison:></h3>
+					<span><:vpaniers:info_montant_gratuit:></span>
+				</li>
+				<li class="c-panier-mini-item c-panier-mini-total c-panier-mini-total--total u-typo-font-vacarme">
+					<h3 class="c-panier-mini-item__intitule"><:vpaniers:info_total:></h3>
+					[<span>(#PRIX{panier,#ID_PANIER})</span>]
+				</li>
+				<li class="c-panier-mini-item c-panier-mini-total u-typo-font-vacarme">
+					[<a href="(#URL_PAGE{panier})" class="c-btn c-btn--black c-btn--upper c-btn--extended"><:vpaniers:info_panier_voir:></a>]
+				</li>
+			</ul>
+		</footer>
+		</B_articles>
+		<footer class="c-panier-mini__footer">
+			<ul class="o-list-bare c-panier-mini__liste-items c-panier-mini-totaux">
+				<li class="c-panier-mini-item c-panier-mini-item--vide">
+					<p class="c-message c-message--simple u-textCenter"><:vpaniers:info_panier_vide:></p>
+					[<a href="(#URL_PAGE{panier})" class="c-btn c-btn--black c-btn--upper c-btn--extended u-typo-font-vacarme"><:vpaniers:info_poursuivre_achats:></a>]
+				</li>
+			</ul>
+		</footer>
+		<//B_articles>
+	</div>
+</BOUCLE_panier_mini>

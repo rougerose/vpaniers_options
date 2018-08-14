@@ -1,0 +1,16 @@
+<BOUCLE_panier_numero(PANIERS_LIENS){id_panier}{id_objet=#ID_OBJET}>
+	<BOUCLE_numeros(RUBRIQUES){id_rubrique=#ID_OBJET}>
+		<li class="o-list-bare__item c-panier-mini-item c-panier-mini-article">
+			<div class="c-panier-mini-article__img">
+				[<a href="[(#URL_RUBRIQUE)]"><img src="(#LOGO_RUBRIQUE|image_reduire{100,0}|extraire_attribut{src})"[ alt="(#TITRE|textebrut)"]></a>]
+			</div>
+			<div class="c-panier-mini-item__descriptif c-panier-mini-article__descriptif">
+				<div class="c-panier-mini-item__titre c-panier-mini-article__titre u-typo-font-vacarme">
+					[<h3 class="c-panier-mini-item__intitule c-panier-mini-article__intitule"><a href="#URL_RUBRIQUE">(#TITRE)[ / (#DATE_NUMERO|saison)[&nbsp;(#DATE_NUMERO|annee)]]</a></h3>]
+					[<span>(#PRIX{#OBJET,#ID_OBJET})</span>]
+				</div>
+				<p class="c-panier-mini-item__designation c-panier-mini-article__prix-unitaire">[(#QUANTITE) &times; ][(#PRIX{#OBJET,#ID_OBJET})]</p>
+			</div>
+		</li>
+	</BOUCLE_numeros>
+</BOUCLE_panier_numero>

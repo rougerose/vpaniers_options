@@ -28,11 +28,18 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'erreur_id_auteur'                          => "Avant de valider votre panier, veuillez vous identifier ou créer votre compte.",
 	'erreur_adresse' => "Avant de valider votre panier, veuillez compléter votre adresse postale",
 	'erreur_abonnement_incomplet' => "Une information est manquante pour cet abonnement : @erreur@. Veuillez le supprimer avant de poursuivre.",
+	'erreur_abonnement_incomplet_panier_mini' => "Pour être valable, votre abonnement doit comporter des informations supplémentaires. Veuillez poursuivre ou recommencer toutes les étapes proposées pour choisir votre abonnement.",
 	'erreur_abonnement_beneficiaire' => "le bénéficiaire est inconnu",
 	'erreur_abonnement_numero_depart' => "le premier numéro est inconnu",
 	
 	// I
 	'icone_panier_titre' => "Vos achats",
+	'info_panier_vide' => "Votre panier est vide",
+	'info_poursuivre_achats' => "Continuez vos achats",
+	'info_livraison' => "Frais de livraison",
+	'info_montant_gratuit' => "Gratuit",
+	'info_total' => "Total",
+	'info_panier_voir' => "Voir votre panier",
 	
 	'label_afficher_panier' => "Afficher le contenu du panier",
 	'label_accepter_contrats'                   => "Avant de valider, veuillez accepter le contrat&nbsp;:",
