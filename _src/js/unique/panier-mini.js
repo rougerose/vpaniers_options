@@ -15,7 +15,7 @@ var PanierMini = (function(){
 
 	function update() {
 		ajaxReload(iconePanierBlocAjax);
-		ajaxReload(panierBlocAjax, { callback: toggle });
+		ajaxReload(panierBlocAjax, { callback: toggle});
 	}
 
 	function toggle() {
@@ -53,7 +53,13 @@ var PanierMini = (function(){
 			event.preventDefault();
 			self.togglePanier();
 		});
-	}
+	};
+	
+	self.ajouterNumero = function() {
+		var timer;
+		window.clearTimeout(timer);
+		timer = window.setTimeout(self.updatePanier, 1000);
+	};
 
 	return self;
 })();

@@ -15,10 +15,17 @@ if (!defined("_ECRIRE_INC_VERSION")) {
  * @return array
  */
 function vpaniers_options_formulaire_fond($flux) {
+	
+	$formulaires = array('souscrire_abonnement', 'offrir_abonnement');
 
-	if ($flux['args']['form'] == 'souscrire_abonnement' and $flux['args']['je_suis_poste']) {
-		$script = http_script("PanierMini.updatePanier();");
-		$flux['data'] .= $script;
+	if (in_array($flux['args']['form'], $formulaires) and $flux['args']['je_suis_poste']) {
+		// pour le formulaire offrir_abonnement vérification que l'on est bien à la fin de l'étape 2
+		if ($flux['args']['form'] == 'offrir_abonnement' and ($flux['args']['contexte']['_etape'] <= $flux['args']['contexte']['_etapes'] and count($flux['args']['contexte']['erreurs']))) {
+			return $flux;
+		} else {
+			$script = http_script("PanierMini.updatePanier();");
+			$flux['data'] .= $script;
+		}
 	}
 	
 	return $flux;

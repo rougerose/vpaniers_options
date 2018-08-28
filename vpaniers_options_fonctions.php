@@ -28,3 +28,40 @@ function vpaniers_calcul_hash_commande($id_auteur, $id_commande, $date_commande)
 	$donnees = array($id_auteur, $id_commande, $date_commande);
 	return md5(implode(';', array_values($donnees)));
 }
+
+
+/**
+ * Calculer le total HT et TTC d'un panier. 
+ * 
+ * Les abonnements de soutien peuvent être à un prix déterminés 
+ * par le souscripteur, la fonction automatique de calcul du prix 
+ * du panier peut être faussée. 
+ * 
+ * @param  int $id_panier
+ * @return array
+ */
+function filtre_panier_calcul_total($id_panier) {
+	include_spip('inc/config');
+	$tva = lire_config('vabonnements/taxe');
+	$total_ht = 0;
+	$total_ttc = 0;
+	
+	$items = sql_allfetsel('options, objet, id_objet', 'spip_paniers_liens', 'id_panier='.intval($id_panier));
+	if ($items) {
+		foreach ($items as $k => $item) {
+			$options = vpaniers_options_expliquer_options($item['options']);
+			foreach ($options as $key => $option) {
+				if ($option['prix_souscripteur']) {
+					$total_ttc += $option['prix_souscripteur'];
+					$total_ht += $option['prix_souscripteur'] / (1 + $tva);
+				} else {
+					$total_ht += prix_ht_objet($item['id_objet'], $item['objet']);
+					$total_ttc += prix_objet($item['id_objet'], $item['objet']);
+				}
+			}
+		}
+		$total_ht = round($total_ht, 2);
+		$total_ttc = round($total_ttc, 2);
+		return array($total_ht, $total_ttc);
+	}
+}
