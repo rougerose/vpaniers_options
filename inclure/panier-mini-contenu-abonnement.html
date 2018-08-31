@@ -26,13 +26,13 @@
 					<span><:vpaniers:abonnement_resume_label_cadeau:></span> [ (#VALEUR{cadeau}|?{#INFO_TITRE{produit, #VALEUR{cadeau}},<:vpaniers:abonnement_resume_cadeau_vide:>})]
 				</p>
 				[(#VALEUR{nom_inscription}|oui)
-					<p><span><:vpaniers:abonnement_resume_label_beneficiaire:></span>[ (#VALEUR{prenom})][ (#VALEUR{nom_inscription})]</p>
-					[<p>L'email destiné au bénéficiaire sera envoyé le (#VALEUR{date_message}|vpaniers_timestamp_vers_date|affdate)</p>]
-					[(#VALEUR{texte_message}|oui)
-						<p>L'email sera accompagné de votre message : <span>(#VALEUR{texte_message})</span></p>
+					<p class="c-panier-mini-item__designation"><span><:vpaniers:abonnement_resume_label_beneficiaire:></span>[ (#VALEUR{prenom})][ (#VALEUR{nom_inscription})]</p>
+					[<p class="c-panier-mini-item__designation"><span><:vpaniers:abonnement_resume_label_date_message_beneficaire:></span> (#VALEUR{date_message}|vpaniers_timestamp_vers_date|affdate)</p>]
+					[(#VALEUR{message}|oui)
+						<p class="c-panier-mini-item__designation"><span><:vpaniers:abonnement_resume_label_message_beneficaire:></span>[ (#VALEUR{message})</p>]
 					]
 				]
-				<p class="c-panier-mini-item__designation c-panier-mini-article__designation">1 &times;[ (#GET{prix})]</p>
+				<p class="c-panier-mini-item__designation">1 &times;[ (#GET{prix})]</p>
 			</div>
 		</li>
 	</BOUCLE_data>

@@ -11,7 +11,7 @@ if (!defined("_ECRIRE_INC_VERSION")) {
  * fonction reprise de Paniers https://github.com/nursit/paniers
  * 
  * @param  array $items
- * @return [type]        [description]
+ * @return string
  */
 function vpaniers_options_produire_options($items) {
 	$articles = array();
@@ -34,7 +34,7 @@ function vpaniers_options_produire_options($items) {
 			$item['ville'],
 			$item['region'],
 			$item['pays'],
-			$item['texte_message'],
+			$item['message'],
 			$item['date_message']
 		);
 		$item = implode('|', array_map('urlencode', $data));
@@ -78,7 +78,7 @@ function vpaniers_options_expliquer_options($options) {
 			$opts[$k]['ville'] = $articles[$k][13];
 			$opts[$k]['region'] = $articles[$k][14];
 			$opts[$k]['pays'] = $articles[$k][15];
-			$opts[$k]['texte_message'] = $articles[$k][16];
+			$opts[$k]['message'] = $articles[$k][16];
 			$opts[$k]['date_message'] = $articles[$k][17];
 		} else {
 			unset($articles[$k]);

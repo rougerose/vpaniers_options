@@ -1,0 +1,27 @@
+#CACHE{0}
+<div class="formulaire_spip formulaire_#FORM formulaire_#FORM-#ENV{id,nouveau}">
+	[<p class="reponse_formulaire reponse_formulaire_ok">(#ENV*{message_ok})</p>]
+	[<p class="reponse_formulaire reponse_formulaire_erreur">(#ENV*{message_erreur})</p>]
+	<form method='post' action='#ENV{action}'><div class="[(#FORM)_contenu]">
+		[(#REM) declarer les hidden qui declencheront le service du formulaire
+		parametre : url d'action ]
+		#ACTION_FORMULAIRE{#ENV{action}}
+		<input type="hidden" name="id_auteur" value="#SESSION{id_auteur}">
+		#SET{name,contrats}#SET{obli,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+		<div class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+			<label><:vpaniers:erreur_accepter_contrat:></label>[
+			<span class='erreur_message'>(#GET{erreurs})</span>
+			]
+			#SET{val,cgv}
+			<div class="choix">
+				<input type="checkbox" name="#GET{name}#EVAL{chr(91)}#EVAL{chr(93)}" class="checkbox" id="#GET{name}_#GET{val}" value="#GET{val}"[(#GET{val}|in_any{#ENV{#GET{name}}}|oui)checked="checked"] />
+				<!-- TODO: changer l'url de l'article ! -->
+				<label for="#GET{name}_#GET{val}">Conditions générales de vente (<a href="#URL_ARTICLE{2}" target="blank">lire [article à faire]</a>)</label>
+			</div>
+		</div>
+		[(#REM) ajouter les saisies supplementaires : extra et autre, a cet endroit ]
+		<!--extra-->
+		<p class='boutons'><span class='image_loading'>&nbsp;</span>
+			<input type='submit' class='submit' value='<:vpaniers:bouton_valider_panier|attribut_html:>' /></p>
+	</div></form>
+</div>

@@ -1,0 +1,8 @@
+<div class="c-commande-identification">
+	<h2 class="c-commande-identification__titre u-typo-font-vacarme"><:vpaniers:erreur_id_auteur:></h2>
+	[(#SET{retour, #URL_PAGE{panier}})]
+	<div class="c-commande-identification__actions">
+		[<a href="(#URL_PAGE{compte}|parametre_url{formulaire, inscription}|parametre_url{type, complet}|parametre_url{retour, #GET{retour}})" class="c-btn c-btn--black c-btn--upper u-typo-font-vacarme"><:vprofils:compte_inscription_info:></a>]
+		[<a href="(#URL_PAGE{compte}|parametre_url{formulaire, identification}|parametre_url{retour, #GET{retour}})" class="c-btn c-btn--black c-btn--upper u-typo-font-vacarme"><:vprofils:compte_identification_info:></a>]
+	</div>
+</div>

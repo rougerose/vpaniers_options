@@ -46,18 +46,23 @@ function filtre_panier_calcul_total($id_panier) {
 	$total_ht = 0;
 	$total_ttc = 0;
 	
-	$items = sql_allfetsel('options, objet, id_objet', 'spip_paniers_liens', 'id_panier='.intval($id_panier));
+	$items = sql_allfetsel('options, objet, id_objet, quantite', 'spip_paniers_liens', 'id_panier='.intval($id_panier));
 	if ($items) {
 		foreach ($items as $k => $item) {
-			$options = vpaniers_options_expliquer_options($item['options']);
-			foreach ($options as $key => $option) {
-				if ($option['prix_souscripteur']) {
-					$total_ttc += $option['prix_souscripteur'];
-					$total_ht += $option['prix_souscripteur'] / (1 + $tva);
-				} else {
-					$total_ht += prix_ht_objet($item['id_objet'], $item['objet']);
-					$total_ttc += prix_objet($item['id_objet'], $item['objet']);
+			if ($item['objet'] == 'abonnements_offre') {
+				$options = vpaniers_options_expliquer_options($item['options']);
+				foreach ($options as $key => $option) {
+					if ($option['prix_souscripteur']) {
+						$total_ttc += $option['prix_souscripteur'] * 1;
+						$total_ht += ($option['prix_souscripteur'] / (1 + $tva)) * 1;
+					} else {
+						$total_ht += prix_ht_objet($item['id_objet'], $item['objet']) * 1;
+						$total_ttc += prix_objet($item['id_objet'], $item['objet']) * 1;
+					}
 				}
+			} else {
+				$total_ht += prix_ht_objet($item['id_objet'], $item['objet']) * $item['quantite'];
+				$total_ttc += prix_objet($item['id_objet'], $item['objet']) * $item['quantite'];
 			}
 		}
 		$total_ht = round($total_ht, 2);
