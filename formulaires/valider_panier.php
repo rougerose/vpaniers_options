@@ -79,7 +79,8 @@ function formulaires_valider_panier_traiter_dist($id_panier, $supprimer = false)
 		}
 		
 		// Et la remplir avec le panier
-		if ($id_commande and $remplir_commande = vpaniers_options_remplir_commande($id_auteur, $id_commande, $id_panier)) {
+		if ($id_commande) {
+			$remplir_commande = vpaniers_options_remplir_commande($id_auteur, $id_commande, $id_panier, false);
 			$res['message_ok'] = _T('vpaniers:message_panier_valide');
 			$res['redirect'] = generer_url_public('commande', 'id_commande=' . $id_commande, true);
 		} else {
