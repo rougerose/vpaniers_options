@@ -142,7 +142,7 @@ function vpaniers_options_remplir_commande($id_auteur, $id_commande, $id_panier,
 			$where = array();
 			
 			foreach ($set as $k => $val) {
-				if (in_array($k, array('id_commande', 'objet', 'id_objet'))) {
+				if (in_array($k, array('id_commande', 'objet', 'id_objet', 'options'))) {
 					$where[] = "$k=".sql_quote($val);
 				}
 			}
