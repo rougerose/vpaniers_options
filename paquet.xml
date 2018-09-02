@@ -13,7 +13,7 @@
 	<credit lien="https://plugins.spip.net/panier_options.html">Dérivé du plugin "Options du panier"</credit>
 
 	<pipeline nom="declarer_champs_extras" inclure="base/vpaniers_options.php" />
-	<pipeline nom="vpaniers_options_vers_commande" action="" />
+	<!-- <pipeline nom="vpaniers_options_vers_commande" action="" /> -->
 	<pipeline nom="formulaire_fond" inclure="vpaniers_options_pipelines.php" />
 	
 	<necessite nom="paniers" compatibilite="[1.3.3;[" />

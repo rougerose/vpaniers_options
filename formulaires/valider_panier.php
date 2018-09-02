@@ -56,6 +56,7 @@ function formulaires_valider_panier_traiter_dist($id_panier, $supprimer = false)
 		include_spip('inc/config');
 		include_spip('inc/session');
 		include_spip('inc/vpaniers_options_remplir_commande');
+		// include_spip('inc/vpaniers_options_remplir_abonnements');
 		
 		$id_auteur = _request('id_auteur');
 		
@@ -72,20 +73,38 @@ function formulaires_valider_panier_traiter_dist($id_panier, $supprimer = false)
 				." AND source=".sql_quote("panier#$id_panier")
 				." AND id_commande=".session_get('id_commande')
 		);
-		
+
 		// Créer une nouvelle commande
 		if (!$id_commande) {
 			$id_commande = creer_commande_encours();
 		}
 		
-		// Et la remplir avec le panier
-		if ($id_commande) {
-			$remplir_commande = vpaniers_options_remplir_commande($id_auteur, $id_commande, $id_panier, false);
+		if (!$id_commande) {
+			$res['message_erreur'] = _T('vpaniers:erreur_technique_creation_commande');
+			spip_log("Panier auteur $id_auteur : Erreur lors de la création de la commande", 'vpaniers_valider_panier'._LOG_ERREUR);
+		} else {
+			// Remplir la commande
+			$commande_details = vpaniers_options_remplir_commande($id_auteur, $id_commande, $id_panier, false);
+		}
+		
+		if (is_string($commande_details)) {
+			$res['message_erreur'] = _T('vpaniers:erreur_technique_creation_commande');
+			spip_log("Panier auteur $id_auteur : Erreur lors de l'enregistrement des détails de la commande #$id_commande", 'vpaniers_valider_panier'._LOG_ERREUR);
+		} else {
 			$res['message_ok'] = _T('vpaniers:message_panier_valide');
 			$res['redirect'] = generer_url_public('commande', 'id_commande=' . $id_commande, true);
-		} else {
-			$res['message_erreur'] = _T('vpaniers:erreur_technique_creation_commande');
+			// Traiter les abonnements de la commande à part
+			//$commande_abonnements = vpaniers_options_remplir_abonnements($id_auteur, $id_commande);
 		}
+		
+		// if (is_string($commande_abonnements)) {
+		// 	$res['message_erreur'] = _T('vpaniers:erreur_technique_creation_commande');
+		// 	spip_log("Panier auteur $id_auteur : Erreur lors de l'enregistrement des abonnements de la commande #$id_commande", 'vpaniers_valider_panier'._LOG_ERREUR);
+		// } else {
+		// 	$res['message_ok'] = _T('vpaniers:message_panier_valide');
+		// 	$res['redirect'] = generer_url_public('commande', 'id_commande=' . $id_commande, true);
+		// }
 	}
+	
 	return $res;
 }

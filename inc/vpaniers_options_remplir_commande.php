@@ -103,7 +103,7 @@ function vpaniers_options_remplir_commande($id_auteur, $id_commande, $id_panier,
 							'id_objet' => $id_cadeau,
 							'quantite' => 1,
 							'statut' => 'attente',
-							'descriptif' => generer_info_entite($id_cadeau, 'produit', 'titre').' cadeau@'.$item['objet'].'-'.$item['id_objet'],
+							'descriptif' => generer_info_entite($id_cadeau, 'produit', 'titre').' cadeau@'.$item['objet'].'-'.$item['id_objet'].'-'.$cle,
 							'prix_unitaire_ht' => 0 // c'est un cadeau
 						);
 					}
@@ -142,7 +142,7 @@ function vpaniers_options_remplir_commande($id_auteur, $id_commande, $id_panier,
 			$where = array();
 			
 			foreach ($set as $k => $val) {
-				if (in_array($k, array('id_commande', 'objet', 'id_objet', 'options'))) {
+				if (in_array($k, array('id_commande', 'objet', 'id_objet', 'options', 'descriptif'))) {
 					$where[] = "$k=".sql_quote($val);
 				}
 			}
@@ -175,5 +175,8 @@ function vpaniers_options_remplir_commande($id_auteur, $id_commande, $id_panier,
 				'data' => array()
 			)
 		);
+		
+		return $details;
 	}
+	return '';
 }
