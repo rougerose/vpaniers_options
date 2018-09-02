@@ -15,10 +15,9 @@
 					<input type="hidden" name="id_auteur" value="#SESSION{id_auteur}">
 					[(#REM) ajouter les saisies supplementaires : extra et autre, a cet endroit ]
 					<!--extra-->
-					<p class="boutons boutons--multiples">
-						<input type="submit" class="submit submit--secondaire" name="supprimer" value="<:vpaniers:bouton_supprimer_panier:>" />
-						<span class="label-alternative"><:vpaniers:info_ou:></span>
-						<input type="submit" class="submit submit--primaire" value="<:vpaniers:bouton_valider_panier:>" />
+					<p class="c-btn-multiples">
+						<input type="submit" class="c-btn c-btn--secondaire c-btn--annuler c-btn--round c-btn--upper" name="supprimer" value="<:vpaniers:bouton_supprimer_panier:>" />
+						<input type="submit" class="c-btn c-btn--primaire c-btn--submit c-btn--round c-btn--upper" value="<:vpaniers:bouton_valider_panier:>" />
 					</p>
 				</div>
 			</form>
