@@ -4,9 +4,13 @@
 		[(#SET{titre, #TITRE})]
 		[(#SET{numeros, #DUREE|numeros_nombre_en_clair})]
 		[(#SET{duree_nb, #DUREE|numeros_nombre})]
+		[(#SET{prix_abonnement, #PRIX})]
 	</BOUCLE_abonnement>
 	<BOUCLE_data(DATA){source tableau, #GET{options}}>
-		[(#SET{prix, [(#VALEUR{prix_souscripteur}|?{[(#VALEUR{prix_souscripteur}|prix_formater)], #PRIX{abonnements_offres, #ENV{id_objet}}})]})]
+		[(#SET{prix, [(#VALEUR{prix_souscripteur}|?{
+			[(#VALEUR{prix_souscripteur}|prix_formater)],
+			[(#GET{prix_abonnement})]})] 
+		})]
 		<li class="o-list-bare__item c-commande-article">
 			<div class="c-commande-article__img">
 				<BOUCLE_couverture(RUBRIQUES){reference=#VALEUR{numero_debut}}>
