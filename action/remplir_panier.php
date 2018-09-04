@@ -22,7 +22,7 @@ function action_remplir_panier($arg=null) {
 	// Options est ajouté. 
 	// C'est un tableau serialisé.
 	// 
-	@list($objet, $id_objet, $quantite, $negatif, $options) = explode('-', $arg);
+	@list($objet, $id_objet, $quantite, $negatif, $options) = explode('/', $arg);
 
 	$paniers_arrondir_quantite = charger_fonction('paniers_arrondir_quantite', 'inc');
 	
