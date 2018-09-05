@@ -93,17 +93,7 @@ function formulaires_valider_panier_traiter_dist($id_panier, $supprimer = false)
 		} else {
 			$res['message_ok'] = _T('vpaniers:message_panier_valide');
 			$res['redirect'] = generer_url_public('commande', 'id_commande=' . $id_commande, true);
-			// Traiter les abonnements de la commande à part
-			//$commande_abonnements = vpaniers_options_remplir_abonnements($id_auteur, $id_commande);
 		}
-		
-		// if (is_string($commande_abonnements)) {
-		// 	$res['message_erreur'] = _T('vpaniers:erreur_technique_creation_commande');
-		// 	spip_log("Panier auteur $id_auteur : Erreur lors de l'enregistrement des abonnements de la commande #$id_commande", 'vpaniers_valider_panier'._LOG_ERREUR);
-		// } else {
-		// 	$res['message_ok'] = _T('vpaniers:message_panier_valide');
-		// 	$res['redirect'] = generer_url_public('commande', 'id_commande=' . $id_commande, true);
-		// }
 	}
 	
 	return $res;
