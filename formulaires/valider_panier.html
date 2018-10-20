@@ -1,0 +1,28 @@
+#CACHE{0}
+<div class="c-commande-contenu">
+	
+	<INCLURE{fond=inclure/panier-articles, env} />
+	
+	<div class="formulaire_spip formulaire_#FORM">
+		[<p class="reponse_formulaire reponse_formulaire_ok">(#ENV*{message_ok})</p>]
+		[<p id="erreur" class="reponse_formulaire reponse_formulaire_erreur">(#ENV*{message_erreur})</p>]
+		[(#ENV{editable}|oui)
+			<form method='post' action='#ENV{action}'>
+				<div class="[(#FORM)_contenu]">
+					[(#REM) declarer les hidden qui declencheront le service du formulaire
+					parametre : url d'action ]
+					#ACTION_FORMULAIRE{#ENV{action}}
+					<input type="hidden" name="id_auteur" value="#SESSION{id_auteur}">
+					[(#REM) ajouter les saisies supplementaires : extra et autre, a cet endroit ]
+					<!--extra-->
+					<p class="c-btn-multiples">
+						<input type="submit" class="c-btn c-btn--primaire c-btn--submit c-btn--round c-btn--upper" value="<:vpaniers:bouton_valider_panier:>" />
+						<input type="submit" class="c-btn c-btn--secondaire c-btn--annuler c-btn--round c-btn--upper" name="supprimer" value="<:vpaniers:bouton_supprimer_panier:>" />
+					</p>
+				</div>
+			</form>
+		][(#ENV{editable}|non)
+			
+		]
+	</div>
+</div>
