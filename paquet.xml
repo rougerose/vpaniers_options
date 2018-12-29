@@ -1,7 +1,7 @@
 <paquet
 	prefix="vpaniers_options"
 	categorie="squelette"
-	version="1.1.0"
+	version="1.1.1"
 	etat="test"
 	compatibilite="[3.2.0;3.2.*]"
 	logo="prive/themes/spip/images/vpaniers_options-64.png"

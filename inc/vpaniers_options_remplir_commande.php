@@ -96,7 +96,9 @@ function vpaniers_options_remplir_commande($id_auteur, $id_commande, $id_panier,
 					);
 					
 					// Un cadeau est lié à l'abonnement ?
-					if (strlen($champs['cadeau']) and $id_cadeau = intval($champs['cadeau']) > 0) {
+					if (strlen($champs['cadeau']) and $champs['cadeau'] > 0) {
+						$id_cadeau = $champs['cadeau'];
+						
 						$details_set[] = array(
 							'id_commande' => $id_commande,
 							'objet' => 'produit',
